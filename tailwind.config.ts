@@ -9,15 +9,45 @@ const config: Config = {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
-    },
+    extend: {},
   },
   darkMode: 'class',
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      prefix: 'nextui',
+      addCommonColors: false,
+      layout: {},
+      themes: {
+        light: {
+          layout: {},
+          colors: {
+            foreground: '#121212',
+            background: '#ECECEC',
+            primary: '#633786',
+            transparent: 'transparent',
+            white: '#ECECEC',
+            black: '#121212',
+            purple: '#633786',
+            greenStatus: '#5EAEA5',
+            redStatus: '#AE5E6D',
+          }, // light theme colors
+        },
+        dark: {
+          layout: {},
+          colors: {
+            background: '#121212',
+            foreground: '#ECECEC',
+            primary: '#C6C3F5',
+            transparent: 'transparent',
+            white: '#ECECEC',
+            black: '#121212',
+            purple: '#633786',
+            greenStatus: '#5EAEA5',
+            redStatus: '#AE5E6D',
+          }, // dark theme colors
+        },
+      },
+    }),
+  ],
 }
 export default config
