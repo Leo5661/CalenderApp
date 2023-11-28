@@ -5,27 +5,32 @@ import {
   nextMonthSide,
   prevMonthSide,
   setMonth,
+  setSelectedDate,
 } from '@/redux/slices/MonthSlice'
+import { useRouter } from 'next/navigation'
 import { getMonth } from '@/utils/util'
 import { Button, ButtonGroup } from '@nextui-org/react'
 import dayjs, { Dayjs } from 'dayjs'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 
 function SideCalender() {
-  const mainMonth = useSelector((state) => state.rootReducer.monthSlice.month)
+  const router = useRouter()
   const sideCalMonth = useSelector(
     (state) => state.rootReducer.monthSlice.sideMonth,
   )
+  const selectedDate = useSelector(
+    (state) => state.rootReducer.monthSlice.selectedDate,
+  )
   const dispatch = useDispatch()
-
-  useEffect(() => {}, [])
   const dayArray = getMonth(sideCalMonth)
 
   const isCurrentDate = (day: Dayjs): boolean =>
     day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')
   const isCurrentMonth = (day: Dayjs) =>
     day.month() === dayjs(new Date(day.date(), sideCalMonth)).month()
+  const isSelectedDate = (day: Dayjs): boolean =>
+    dayjs(selectedDate).format('DD-MM-YY') === day.format('DD-MM-YY')
 
   const handleNext = () => {
     dispatch(nextMonthSide())
@@ -36,6 +41,12 @@ function SideCalender() {
   const handleDatePress = (day: Dayjs) => {
     const month = day.month()
     dispatch(setMonth(month))
+    dispatch(setSelectedDate(day.toString()))
+  }
+
+  const handleDoubleClick = (day: Dayjs) => {
+    handleDatePress(day)
+    router.push('/day')
   }
   return (
     <div className="flex w-60 flex-col">
@@ -69,10 +80,15 @@ function SideCalender() {
                 isIconOnly
                 key={index2}
                 onPress={() => handleDatePress(day)}
+                onDoubleClick={() => handleDoubleClick(day)}
                 className={`flex h-5 w-3 items-center justify-center text-xs font-normal text-foreground/60 hover:bg-foreground/5 ${
-                  isCurrentDate(day)
-                    ? 'bg-purple/80 dark:bg-purple'
-                    : 'bg-transparent'
+                  isSelectedDate(day)
+                    ? isCurrentDate(day)
+                      ? 'bg-purple/80 dark:bg-purple'
+                      : 'bg-purple/60 dark:bg-purple/50'
+                    : isCurrentDate(day)
+                      ? 'bg-purple/80 dark:bg-purple'
+                      : 'bg-transparent'
                 }`}
               >
                 <span

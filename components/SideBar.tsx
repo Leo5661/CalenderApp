@@ -1,6 +1,9 @@
 import { Calendar } from 'lucide-react'
 import CreateEventButton from './CreateEventButton'
 import SideCalender from './SideCalender'
+import { Button, Divider } from '@nextui-org/react'
+import { Plus } from 'lucide-react'
+import TagsList from './TagsList'
 
 function SideBar() {
   return (
@@ -15,6 +18,20 @@ function SideBar() {
         <div className="mt-8">
           <SideCalender />
         </div>
+        <Divider className="my-4" />
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-medium text-foreground">Todays Task</div>
+          <Button
+            size="sm"
+            radius="sm"
+            variant="light"
+            className="text-xs font-light text-foreground/50"
+          >
+            view more
+          </Button>
+        </div>
+        <Divider className="my-2" />
+        <TagsList />
       </div>
     </div>
   )

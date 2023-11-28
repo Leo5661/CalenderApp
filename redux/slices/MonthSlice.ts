@@ -4,9 +4,11 @@ import dayjs from 'dayjs'
 type Month = {
   month: number
   sideMonth: number
+  selectedDate: string
 }
 
 const initialState: Month = {
+  selectedDate: dayjs().toString(),
   month: dayjs().month(),
   sideMonth: dayjs().month(),
 }
@@ -37,6 +39,9 @@ export const monthSlice = createSlice({
     nextMonthSide: (state) => {
       state.sideMonth++
     },
+    setSelectedDate: (state, action: PayloadAction<string>) => {
+      state.selectedDate = action.payload
+    },
   },
 })
 
@@ -47,5 +52,6 @@ export const {
   resetMonth,
   prevMonthSide,
   nextMonthSide,
+  setSelectedDate,
 } = monthSlice.actions
 export default monthSlice.reducer

@@ -1,6 +1,7 @@
 'use client'
 import { Button, Modal, ModalContent, useDisclosure } from '@nextui-org/react'
 import { Plus } from 'lucide-react'
+import EventModal from './EventModal'
 function CreateEventButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   return (
@@ -22,7 +23,9 @@ function CreateEventButton() {
         placement="top-center"
         radius="md"
       >
-        <ModalContent>{(onclose) => <></>}</ModalContent>
+        <ModalContent>
+          {(onClose) => <EventModal onClose={onClose} />}
+        </ModalContent>
       </Modal>
     </>
   )
