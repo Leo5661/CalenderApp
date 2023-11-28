@@ -10,7 +10,8 @@ import {
 import { useRouter } from 'next/navigation'
 import { getMonth } from '@/utils/util'
 import { Button, ButtonGroup } from '@nextui-org/react'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
+import dayjs from '@/utils/dayjsInstance'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Fragment } from 'react'
 

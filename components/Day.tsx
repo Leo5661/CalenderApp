@@ -1,5 +1,6 @@
 import { Modal, useDisclosure, ModalContent } from '@nextui-org/react'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
+import dayjs from '@/utils/dayjsInstance'
 import EventModal from './EventModal'
 import { useDispatch } from '@/hooks/useReduxHooks'
 import { setSelectedDate } from '@/redux/slices/MonthSlice'

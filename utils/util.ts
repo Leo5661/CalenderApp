@@ -1,4 +1,5 @@
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
+import dayjs from '@/utils/dayjsInstance'
 export const getMonth = (
   month: number = dayjs().month(),
 ): Array<Array<Dayjs>> => {

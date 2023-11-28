@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import dayjs from 'dayjs'
+import dayjs from '@/utils/dayjsInstance'
 
 type Month = {
   month: number

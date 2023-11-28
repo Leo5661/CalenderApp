@@ -10,7 +10,7 @@ import {
   resetMonth,
   setSelectedDate,
 } from '@/redux/slices/MonthSlice'
-import dayjs from 'dayjs'
+import dayjs from '@/utils/dayjsInstance'
 import { usePathname } from 'next/navigation'
 
 function Header() {

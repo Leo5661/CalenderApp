@@ -2,7 +2,7 @@
 import { useSelector } from '@/hooks/useReduxHooks'
 import { getHourList } from '@/utils/util'
 import Hour from './Hour'
-import dayjs from 'dayjs'
+import dayjs from '@/utils/dayjsInstance'
 import { Divider } from '@nextui-org/react'
 function Date() {
   const date = useSelector((state) => state.rootReducer.monthSlice.selectedDate)

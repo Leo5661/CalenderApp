@@ -14,7 +14,8 @@ import {
   PopoverTrigger,
   Textarea,
 } from '@nextui-org/react'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
+import dayjs from '@/utils/dayjsInstance'
 import { Fragment, useEffect, useState } from 'react'
 import { CalendarClock, AlignLeft, Tag } from 'lucide-react'
 import SideCalender from './SideCalender'

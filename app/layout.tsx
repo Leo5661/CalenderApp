@@ -2,15 +2,10 @@ import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/providers/providers'
-import utc from 'dayjs/plugin/utc'
-import arraySupport from 'dayjs/plugin/arraySupport'
-import dayjs from 'dayjs'
+
 import SideBar from '@/components/SideBar'
 import { Divider } from '@nextui-org/react'
 import Header from '@/components/Header'
-
-dayjs.extend(utc)
-dayjs.extend(arraySupport)
 
 const jetBrainsMono = JetBrains_Mono({ subsets: ['latin'] })
 
