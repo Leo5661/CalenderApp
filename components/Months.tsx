@@ -7,7 +7,7 @@ import { useSelector } from '@/hooks/useReduxHooks'
 import { getMonth } from '@/utils/util'
 
 function Months() {
-  const month = useSelector((state) => state.rootReducer.monthSlice.month)
+  const month = useSelector((state) => state.monthSlice.month)
   const dayArray = getMonth(month)
 
   return (

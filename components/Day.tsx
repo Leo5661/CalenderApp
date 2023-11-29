@@ -2,8 +2,9 @@ import { Modal, useDisclosure, ModalContent } from '@nextui-org/react'
 import { Dayjs } from 'dayjs'
 import dayjs from '@/utils/dayjsInstance'
 import EventModal from './EventModal'
-import { useDispatch } from '@/hooks/useReduxHooks'
+import { useDispatch, useSelector } from '@/hooks/useReduxHooks'
 import { setSelectedDate } from '@/redux/slices/MonthSlice'
+import { getTask, truncate } from '@/utils/util'
 
 type Props = {
   day: Dayjs
@@ -11,6 +12,7 @@ type Props = {
   month: number
 }
 function Day({ day, rowIndex, month }: Props) {
+  const eventList = useSelector((state) => state.eventSlice.eventList)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const dispatch = useDispatch()
   const isCurrentDate = day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')
@@ -21,6 +23,8 @@ function Day({ day, rowIndex, month }: Props) {
     dispatch(setSelectedDate(day.toString()))
     onOpen()
   }
+
+  const taskList = getTask(eventList, day)
 
   return (
     <div
@@ -49,6 +53,16 @@ function Day({ day, rowIndex, month }: Props) {
           {day.date()}
         </div>
       </div>
+
+      <div className="mt-2 flex w-full flex-1 flex-col items-start px-2">
+        {taskList.length !== 0 &&
+          taskList.map((item) => (
+            <div className="my-1 w-full rounded-full border border-purple/30 px-2 py-1 text-xs font-extralight text-foreground/80">
+              {truncate(item.title, 15)}
+            </div>
+          ))}
+      </div>
+
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}

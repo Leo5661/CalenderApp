@@ -15,7 +15,7 @@ import { Fragment, useState } from 'react'
 import { useSelector } from '@/hooks/useReduxHooks'
 import TagItem from './TagItem'
 function TagsList() {
-  const tag = useSelector((state) => state.rootReducer.tagSlice.tagList)
+  const tag = useSelector((state) => state.tagSlice.tagList)
   const [isTagListOpen, setIsTagListOpen] = useState<boolean>(true)
   const [tagName, setTagName] = useState<string>('')
   const [tagColor, setTagColor] = useState<string>('#633786')

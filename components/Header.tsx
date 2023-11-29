@@ -16,10 +16,8 @@ import { usePathname } from 'next/navigation'
 function Header() {
   const dispatch = useDispatch()
   const pathname = usePathname()
-  const month = useSelector((state) => state.rootReducer.monthSlice.month)
-  const selectDay = useSelector(
-    (state) => state.rootReducer.monthSlice.selectedDate,
-  )
+  const month = useSelector((state) => state.monthSlice.month)
+  const selectDay = useSelector((state) => state.monthSlice.selectedDate)
 
   const isDayPage = pathname === '/day'
 

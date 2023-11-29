@@ -1,9 +1,9 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit'
 
 export type TagItem = {
   name: string
   colorCode: string
-  id: number
+  id: string
 }
 
 type TagState = {
@@ -14,22 +14,22 @@ const defaultTags: TagItem[] = [
   {
     name: 'Birthdays',
     colorCode: '#48d4b3',
-    id: 1,
+    id: nanoid(),
   },
   {
     name: 'Reminders',
     colorCode: '#4265b0',
-    id: 2,
+    id: nanoid(),
   },
   {
     name: 'Tasks',
     colorCode: '#b05342',
-    id: 3,
+    id: nanoid(),
   },
   {
     name: 'Holidays',
     colorCode: '#b643a3',
-    id: 4,
+    id: nanoid(),
   },
 ]
 
@@ -44,7 +44,7 @@ export const tagsSlice = createSlice({
     addTag: (state, action: PayloadAction<TagItem>) => {
       state.tagList.push(action.payload)
     },
-    removeTag: (state, action: PayloadAction<number>) => {
+    removeTag: (state, action: PayloadAction<string>) => {
       const itemIndex = state.tagList.findIndex(
         (item) => item.id === action.payload,
       )

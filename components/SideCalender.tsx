@@ -17,12 +17,8 @@ import { Fragment } from 'react'
 
 function SideCalender() {
   const router = useRouter()
-  const sideCalMonth = useSelector(
-    (state) => state.rootReducer.monthSlice.sideMonth,
-  )
-  const selectedDate = useSelector(
-    (state) => state.rootReducer.monthSlice.selectedDate,
-  )
+  const sideCalMonth = useSelector((state) => state.monthSlice.sideMonth)
+  const selectedDate = useSelector((state) => state.monthSlice.selectedDate)
   const dispatch = useDispatch()
   const dayArray = getMonth(sideCalMonth)
 
