@@ -20,6 +20,7 @@ import dayjs from '@/utils/dayjsInstance'
 import { useState } from 'react'
 import { useDispatch, useSelector } from '@/hooks/useReduxHooks'
 import EditEventModal from './EditEventModal'
+import { setSelectedDate } from '@/redux/slices/MonthSlice'
 
 type Props = {
   task: EventItem
@@ -46,6 +47,7 @@ function EventDetailsPopover({ task }: Props) {
   }
 
   const handleEdit = () => {
+    dispatch(setSelectedDate(task.dateTime))
     handleOpen()
     onOpen()
   }
