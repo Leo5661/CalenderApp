@@ -1,10 +1,12 @@
-import { Modal, useDisclosure, ModalContent } from '@nextui-org/react'
+import { Modal, useDisclosure, ModalContent, Tooltip } from '@nextui-org/react'
 import { Dayjs } from 'dayjs'
 import dayjs from '@/utils/dayjsInstance'
 import EventModal from './EventModal'
 import { useDispatch, useSelector } from '@/hooks/useReduxHooks'
 import { setSelectedDate } from '@/redux/slices/MonthSlice'
 import { getTask, truncate } from '@/utils/util'
+import EventDetailsPopover from './EventDetailsPopover'
+import { MouseEvent } from 'react'
 
 type Props = {
   day: Dayjs
@@ -19,10 +21,11 @@ function Day({ day, rowIndex, month }: Props) {
   const isCurrentMonth =
     day.month() === dayjs(new Date(day.date(), month)).month()
 
-  const handleClick = () => {
-    dispatch(setSelectedDate(day.toString()))
-    onOpen()
-  }
+  // const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+  //   event.preventDefault()
+  //   dispatch(setSelectedDate(day.toString()))
+  //   onOpen()
+  // }
 
   const taskList = getTask(eventList, day)
 
@@ -31,7 +34,7 @@ function Day({ day, rowIndex, month }: Props) {
       className={`flex flex-col items-center justify-start border border-foreground/5 ${
         isCurrentMonth ? 'bg-background' : 'bg-foreground/5'
       }`}
-      onClick={handleClick}
+      // onClick={handleClick}
     >
       {rowIndex === 0 && (
         <div className="mt-2 text-sm font-semibold uppercase text-foreground/80">
@@ -57,9 +60,7 @@ function Day({ day, rowIndex, month }: Props) {
       <div className="mt-2 flex w-full flex-1 flex-col items-start px-2">
         {taskList.length !== 0 &&
           taskList.map((item) => (
-            <div className="my-1 w-full rounded-full border border-purple/30 px-2 py-1 text-xs font-extralight text-foreground/80">
-              {truncate(item.title, 15)}
-            </div>
+            <EventDetailsPopover key={item.id} task={item} />
           ))}
       </div>
 

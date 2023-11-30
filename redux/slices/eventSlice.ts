@@ -33,7 +33,7 @@ export const eventSlice = createSlice({
       state.eventList.splice(itemIndex, 1)
     },
     updateEvent: (state, action: PayloadAction<EventItem>) => {
-      state.eventList.map((item) =>
+      state.eventList = state.eventList.map((item) =>
         item.id === action.payload.id ? { ...item, ...action.payload } : item,
       )
     },

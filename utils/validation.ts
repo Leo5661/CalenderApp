@@ -7,4 +7,5 @@ export const eventFormSchema = z.object({
   location: z.string().optional(),
   description: z.string().optional(),
   dateTime: z.string(),
+  tagId: z.string().optional(),
 })

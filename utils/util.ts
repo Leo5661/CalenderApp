@@ -1,6 +1,7 @@
 import { Dayjs } from 'dayjs'
 import dayjs from '@/utils/dayjsInstance'
 import { EventItem } from '@/redux/slices/eventSlice'
+import { TagItem } from '@/redux/slices/TagSlice'
 export const getMonth = (
   month: number = dayjs().month(),
 ): Array<Array<Dayjs>> => {
@@ -68,10 +69,18 @@ export const getTaskByTime = (list: EventItem[], time: Dayjs): EventItem[] => {
   const startTime = time
   const endTime = time.add(1, 'hour')
   return list.filter((item) =>
-    dayjs(item.dateTime).isBetween(startTime, endTime, 'minute', '[]'),
+    dayjs(item.dateTime).isBetween(startTime, endTime, 'minute', '[)'),
   )
 }
 
 export const truncate = (str: string, length: number): string => {
   return str.length > length ? str.slice(0, length - 1) + '...' : str
+}
+
+export const getTag = (tagList: TagItem[], id: string): TagItem | null => {
+  const item = tagList.find((item) => item.id === id)
+  if (item) {
+    return item
+  }
+  return null
 }

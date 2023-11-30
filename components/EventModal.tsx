@@ -24,7 +24,7 @@ import { Fragment, useMemo, useState } from 'react'
 import { CalendarClock, AlignLeft, Tag, Video, MapPin } from 'lucide-react'
 import SideCalender from './SideCalender'
 import TagItem from './TagItem'
-import { getHourList, getSelectedDateTime } from '@/utils/util'
+import { getHourList, getSelectedDateTime, getTag } from '@/utils/util'
 import { ZodError, z } from 'zod'
 import { eventFormSchema } from '@/utils/validation'
 import { nanoid } from '@reduxjs/toolkit'
@@ -47,7 +47,9 @@ function EventModal({ onClose }: Props) {
   )
   const tag = useSelector((state) => state.tagSlice.tagList)
   const [selectedTab, setSelectedTabs] = useState<any>('event')
-  const [selectedTag, setSelectedTag] = useState<any>(new Set([]))
+  const [selectedTagKey, setSelectedTagKey] = useState<any>(
+    new Set([`${tag[2].id}`]),
+  )
   const [validationErrors, setValidationErrors] =
     useState<z.inferFlattenedErrors<typeof eventFormSchema>>()
   const dispatch = useDispatch()
@@ -57,10 +59,12 @@ function EventModal({ onClose }: Props) {
     [selectedTime],
   )
 
-  const selectedTagId = useMemo(
-    () => Array.from(selectedTag).join(),
-    [selectedTag],
+  const selectedTag = useMemo(
+    () => getTag(tag, Array.from(selectedTagKey).join()),
+    [selectedTagKey],
   )
+
+  console.log(Array.from(selectedTagKey).join())
 
   const handleCreateEvent = (formData: FormData) => {
     const id = nanoid()
@@ -81,6 +85,7 @@ function EventModal({ onClose }: Props) {
           : formData.get('location')?.toString().trim(),
       description: formData.get('description') ?? undefined,
       dateTime: dateTime,
+      tagId: selectedTag?.id ?? undefined,
     }
 
     try {
@@ -179,28 +184,6 @@ function EventModal({ onClose }: Props) {
             className="mx-4 w-full hover:bg-foreground/5 focus:bg-foreground/5"
           />
         </div>
-        <div className="mt-4 flex w-full flex-row items-center">
-          <Tag />
-          <Dropdown size="sm" radius="sm">
-            <DropdownTrigger>
-              <Button size="sm" radius="sm" variant="bordered" className="mx-4">
-                {selectedTag}
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label="Tag selection option"
-              selectionMode="single"
-              selectedKeys={selectedTab}
-              onSelectionChange={setSelectedTag}
-            >
-              {tag.map((item: TagItemType) => (
-                <DropdownItem>
-                  <TagItem key={item.id} tag={item} />
-                </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-        </div>
       </div>
     )
   }
@@ -226,21 +209,31 @@ function EventModal({ onClose }: Props) {
                 <SideCalender />
               </PopoverContent>
             </Popover>
-            <Popover placement="bottom">
-              <PopoverTrigger>
+            <Dropdown size="sm" radius="none">
+              <DropdownTrigger>
                 <Input
                   variant="underlined"
                   size="sm"
                   readOnly
-                  value={selectedDay.local().format('HH-mm')}
+                  value={selectedTimeValue}
                   className="mx-1 hover:bg-foreground/5 focus:bg-foreground/5"
                   radius="none"
                 />
-              </PopoverTrigger>
-              <PopoverContent>
-                <SideCalender />
-              </PopoverContent>
-            </Popover>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Time selection option"
+                variant="light"
+                selectionMode="single"
+                disallowEmptySelection
+                selectedKeys={selectedTime}
+                onSelectionChange={setSelectedTime}
+                className="h-40 overflow-hidden overflow-y-scroll"
+              >
+                {hourList.map((item: string) => (
+                  <DropdownItem key={item}>{item}</DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </div>
         <div className="mt-8 flex w-full flex-row items-center">
@@ -256,23 +249,6 @@ function EventModal({ onClose }: Props) {
             className="mx-4 w-full hover:bg-foreground/5 focus:bg-foreground/5"
           />
         </div>
-        <div className="mt-8 flex w-full flex-row items-center">
-          <Tag />
-          <Dropdown size="sm" radius="sm">
-            <DropdownTrigger>
-              <Button size="sm" radius="sm" variant="bordered" className="mx-4">
-                Select tag
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu>
-              {tag.map((item: TagItemType) => (
-                <DropdownItem>
-                  <TagItem key={item.id} tag={item} />
-                </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-        </div>
       </Fragment>
     )
   }
@@ -280,7 +256,6 @@ function EventModal({ onClose }: Props) {
   return (
     <form action={handleCreateEvent}>
       <ModalHeader className="">Create Event</ModalHeader>
-
       <ModalBody className="flex flex-col items-start">
         <div className="flex w-full flex-col items-start">
           <Input
@@ -309,6 +284,34 @@ function EventModal({ onClose }: Props) {
               <TaskTab />
             </Tab>
           </Tabs>
+
+          <div className="mt-4 flex w-full flex-row items-center ">
+            <Tag color={selectedTag?.colorCode} />
+            <Dropdown size="sm" radius="sm">
+              <DropdownTrigger>
+                <Button
+                  size="sm"
+                  radius="sm"
+                  variant="bordered"
+                  className={`mx-4 w-60 text-[${selectedTag?.colorCode}]`}
+                >
+                  {selectedTag?.name}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Tag selection option"
+                selectionMode="single"
+                selectedKeys={selectedTagKey}
+                onSelectionChange={setSelectedTagKey}
+              >
+                {tag.map((item: TagItemType) => (
+                  <DropdownItem key={item.id}>
+                    <TagItem tag={item} />
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+          </div>
         </div>
       </ModalBody>
       <ModalFooter className="flex justify-end">
