@@ -24,17 +24,17 @@ function Hour({ hour, dayTask }: Props) {
   }
 
   return (
-    <div className="flex flex-row items-center justify-start border-b border-foreground/5 px-5">
-      <div className="py-6 pr-4 text-xs font-light text-foreground/50">
+    <div className="flex h-full flex-row items-center justify-start border-b border-foreground/5 px-3 md:px-5">
+      <div className="py-3 pr-4 text-xs font-light text-foreground/50 md:py-6">
         {hour}
       </div>
       <Divider orientation="vertical" />
-      <div className="flex flex-1 flex-row items-center justify-start gap-1">
+      <div className="flex h-full flex-1 flex-row items-center justify-start gap-1 md:py-4">
         {taskList.length !== 0 &&
           taskList.map((item) => (
             <div
               key={item.id}
-              className="flex w-full flex-row items-center space-x-5 rounded-md border border-foreground/10 px-2 py-1"
+              className="flex h-full w-full flex-row items-center space-x-2 rounded-md border border-foreground/10 px-2 md:space-x-5 md:py-1"
             >
               <Tag size={15} color={styleColor(item)} />
               <div className="text-xs font-extralight">{item.title}</div>

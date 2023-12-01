@@ -7,19 +7,21 @@ import TagsList from './TagsList'
 
 function SideBar() {
   return (
-    <div className="flex flex-col items-start p-4">
-      <div className=" flex w-full items-start space-x-1">
+    <div className="flex flex-col items-center p-2 md:items-start md:p-4 ">
+      <div className=" mt-4 flex items-center md:mt-1 md:w-full md:items-start md:space-x-1">
         <Calendar color="orange" />
-        <div className="text-xl font-bold text-foreground">Calender</div>
+        <div className="hidden text-xl font-bold text-foreground md:flex">
+          Calender
+        </div>
       </div>
 
-      <div className="mt-8 flex flex-col py-4">
+      <div className="mt-8 flex flex-col items-center py-4 md:items-start">
         <CreateEventButton />
-        <div className="mt-8">
+        <div className="mt-8 hidden md:flex">
           <SideCalender />
         </div>
-        <Divider className="my-4" />
-        <div className="flex items-center justify-between">
+        <Divider className="my-4 hidden md:flex" />
+        <div className="hidden items-center justify-between md:flex md:w-full">
           <div className="text-sm font-medium text-foreground">Todays Task</div>
           <Button
             size="sm"

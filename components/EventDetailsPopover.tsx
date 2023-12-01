@@ -53,7 +53,7 @@ function EventDetailsPopover({ task }: Props) {
   }
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <Popover
         placement="right"
         size="sm"
@@ -64,12 +64,11 @@ function EventDetailsPopover({ task }: Props) {
       >
         <PopoverTrigger>
           <Button
-            size="sm"
             variant="light"
             startContent={
               <Tag size={15} color={selectedTag ? selectedTag.colorCode : ''} />
             }
-            className="my-1 w-full rounded-full border border-purple/30 text-xs font-extralight text-foreground/80 outline-none hover:cursor-pointer"
+            className="w-full rounded-md border border-purple/30 p-1 text-xs font-extralight text-foreground/80 outline-none hover:cursor-pointer md:my-1 md:rounded-full"
           >
             {truncate(task.title, 15)}
           </Button>

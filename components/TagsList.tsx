@@ -30,9 +30,11 @@ function TagsList() {
   }
 
   return (
-    <div className="flex flex-col items-start">
+    <div className="hidden w-full flex-col items-center md:flex md:items-start">
       <div className="flex w-full flex-row items-center justify-between">
-        <div className="text-sm font-medium text-foreground">Tags</div>
+        <div className="text:xs font-light text-foreground md:text-sm md:font-medium">
+          Tags
+        </div>
         <ButtonGroup>
           <Button
             size="sm"

@@ -7,6 +7,7 @@ import { setSelectedDate } from '@/redux/slices/MonthSlice'
 import { getTask, truncate } from '@/utils/util'
 import EventDetailsPopover from './EventDetailsPopover'
 import { MouseEvent } from 'react'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   day: Dayjs
@@ -14,6 +15,7 @@ type Props = {
   month: number
 }
 function Day({ day, rowIndex, month }: Props) {
+  const router = useRouter()
   const eventList = useSelector((state) => state.eventSlice.eventList)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const dispatch = useDispatch()
@@ -21,11 +23,16 @@ function Day({ day, rowIndex, month }: Props) {
   const isCurrentMonth =
     day.month() === dayjs(new Date(day.date(), month)).month()
 
-  // const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-  //   event.preventDefault()
-  //   dispatch(setSelectedDate(day.toString()))
-  //   onOpen()
-  // }
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    dispatch(setSelectedDate(day.toString()))
+    onOpen()
+  }
+
+  const handleDoubleClick = () => {
+    dispatch(setSelectedDate(day.toString()))
+    router.push('/day')
+  }
 
   const taskList = getTask(eventList, day)
 
@@ -34,7 +41,7 @@ function Day({ day, rowIndex, month }: Props) {
       className={`flex flex-col items-center justify-start border border-foreground/5 ${
         isCurrentMonth ? 'bg-background' : 'bg-foreground/5'
       }`}
-      // onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
     >
       {rowIndex === 0 && (
         <div className="mt-2 text-sm font-semibold uppercase text-foreground/80">
@@ -42,22 +49,23 @@ function Day({ day, rowIndex, month }: Props) {
         </div>
       )}
       <div
-        className={`mt-1 flex h-8 w-8 items-center justify-center rounded-full p-1 ${
+        className={`mt-1 flex h-5 w-5 items-center justify-center rounded-full p-1 md:h-8 md:w-8 ${
           isCurrentDate && 'bg-purple/80 dark:bg-purple'
         }`}
       >
         <div
-          className={`text-sm font-normal ${
+          className={`text-sm font-normal hover:cursor-pointer ${
             isCurrentDate
               ? 'text-background dark:text-foreground'
               : 'text-foreground/60'
           }`}
+          onClick={handleClick}
         >
           {day.date()}
         </div>
       </div>
 
-      <div className="mt-2 flex w-full flex-1 flex-col items-start px-2">
+      <div className="mt-2 flex w-full flex-1 flex-col items-start md:px-2">
         {taskList.length !== 0 &&
           taskList.map((item) => (
             <EventDetailsPopover key={item.id} task={item} />

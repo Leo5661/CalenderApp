@@ -10,10 +10,11 @@ function Date() {
   const selectedDate = dayjs(date)
   const hourArray = getHourList('00:00', '24:00', 60)
   const fullDayTaskList = getTask(eventList, selectedDate)
+
   return (
     <div className="relative flex h-full flex-1 flex-col">
       <div className="sticky top-0 flex flex-col ">
-        <div className=" flex flex-col items-start justify-start px-12 py-2">
+        <div className=" flex flex-col items-start justify-start px-6 py-1 md:px-12 md:py-2">
           <div className="text-sm font-normal uppercase text-foreground">
             {selectedDate.format('dddd')}
           </div>
@@ -23,7 +24,7 @@ function Date() {
         </div>
         <Divider />
       </div>
-      <div className="grid-rows-24 grid grid-cols-1 overflow-y-scroll pl-10">
+      <div className="grid-rows-24 grid grid-cols-1 overflow-y-scroll md:pl-10">
         {hourArray.map((hour, index) => (
           <Hour key={index} hour={hour} dayTask={fullDayTaskList} />
         ))}

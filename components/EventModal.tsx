@@ -64,8 +64,6 @@ function EventModal({ onClose }: Props) {
     [selectedTagKey],
   )
 
-  console.log(Array.from(selectedTagKey).join())
-
   const handleCreateEvent = (formData: FormData) => {
     const id = nanoid()
     const dateTime = getSelectedDateTime(
@@ -301,6 +299,7 @@ function EventModal({ onClose }: Props) {
               <DropdownMenu
                 aria-label="Tag selection option"
                 selectionMode="single"
+                disallowEmptySelection
                 selectedKeys={selectedTagKey}
                 onSelectionChange={setSelectedTagKey}
               >

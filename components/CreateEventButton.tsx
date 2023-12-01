@@ -9,13 +9,24 @@ function CreateEventButton() {
       <Button
         variant="bordered"
         startContent={<Plus size={15} />}
-        size="lg"
+        size="md"
         radius="sm"
         color="primary"
-        className="px-8"
+        className="hidden px-8 md:flex md:w-full"
         onPress={onOpen}
       >
         Create event
+      </Button>
+      <Button
+        variant="bordered"
+        size="md"
+        radius="sm"
+        isIconOnly
+        color="primary"
+        className="flex md:hidden"
+        onPress={onOpen}
+      >
+        <Plus size={15} color="purple" />
       </Button>
       <Modal
         isOpen={isOpen}

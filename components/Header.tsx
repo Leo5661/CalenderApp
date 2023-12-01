@@ -51,16 +51,16 @@ function Header() {
   }
 
   return (
-    <header className="flex w-full items-center justify-between px-8 py-1">
+    <header className="flex w-full items-center justify-between px-4 py-1 md:px-8">
       <div className="flex items-center">
-        <div className="px-4 text-xl font-normal text-foreground">
+        <div className="px-2 text-base font-normal text-foreground md:px-4 md:text-xl">
           {dayjs(new Date(dayjs().year(), month)).format('MMMM YYYY')}
         </div>
         <Button
           onPress={isDayPage ? handleResetDay : handleReset}
           variant="bordered"
           size="sm"
-          radius="sm"
+          className="rounded-md p-2 md:rounded-lg "
         >
           Today
         </Button>
