@@ -157,7 +157,7 @@ function EventDetailsPopover({ task }: Props) {
               <Textarea
                 isReadOnly
                 variant="flat"
-                defaultValue="NextUI is a React UI library that provides a set of accessible, reusable, and beautiful components."
+                defaultValue={task.description}
                 className="text-md max-w-xs font-medium text-foreground"
               />
             </div>
